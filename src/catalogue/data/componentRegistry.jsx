@@ -34,6 +34,7 @@ import {
   Upload,
   Users,
   Wrench,
+  X,
 } from "lucide-react";
 import {
   TenantActivityFeed,
@@ -148,8 +149,8 @@ export const components = [
     status: "ready",
     tags: ["display", "body", "mono"],
     description: "Condensed display headings, readable body copy, and mono labels for organiser workflows.",
-    usage: "<TenantTypographySample />",
-    Preview: TenantTypographySample,
+    usage: '<TenantTypographySample scale="compact" />',
+    Preview: () => <div className="preview-grid compact"><TenantTypographySample /><TenantTypographySample scale="compact" /><TenantTypographySample scale="large" /></div>,
   },
   {
     id: "accent-phrase",
@@ -218,7 +219,7 @@ export const components = [
     tags: ["logo", "brand"],
     description: "TenantAct product lockups for catalogue examples and project headers.",
     usage: '<TenantLogoLockup product="REACHOUT" />',
-    Preview: () => <div className="stack"><TenantLogoLockup product="REACHOUT" /><TenantLogoLockup product="TRIBUNAL SCRAPER" /></div>,
+    Preview: () => <div className="stack"><TenantLogoLockup product="REACHOUT" size="small" /><TenantLogoLockup product="TRIBUNAL SCRAPER" /><TenantLogoLockup product="TENANTACT" size="large" /></div>,
   },
   {
     id: "breadcrumbs",
@@ -228,8 +229,8 @@ export const components = [
     status: "ready",
     tags: ["wayfinding", "hierarchy"],
     description: "Compact wayfinding trail for admin and documentation views.",
-    usage: '<TenantBreadcrumbs items={["Components", "Inputs and forms", "Text input"]} />',
-    Preview: () => <TenantBreadcrumbs items={["Components", "Inputs and forms", "Text input"]} />,
+    usage: '<TenantBreadcrumbs items={["Components", "Inputs and forms", "Text input"]} variant="chevron" />',
+    Preview: () => <div className="stack"><TenantBreadcrumbs items={["Components", "Inputs and forms", "Text input"]} /><TenantBreadcrumbs variant="chevron" items={["Home", "Casework", "Reportbacks"]} /></div>,
   },
   {
     id: "toolbar",
@@ -250,8 +251,8 @@ export const components = [
     status: "ready",
     tags: ["primary", "outline", "destructive"],
     description: "Primary, outline, ghost, size, and destructive action buttons.",
-    usage: '<TenantButton variant="primary" icon="arrow">Start contacting</TenantButton>',
-    Preview: () => <div className="preview-row"><TenantButton size="large" icon="arrow">Large button</TenantButton><TenantButton variant="outline">Outline button</TenantButton><TenantButton variant="ghost">Ghost button</TenantButton><TenantButton variant="danger">Delete</TenantButton></div>,
+    usage: '<TenantButton variant="primary" size="large" icon="arrow">Start contacting</TenantButton>',
+    Preview: () => <div className="preview-row"><TenantButton size="large" icon="arrow">Large button</TenantButton><TenantButton variant="secondary">Secondary</TenantButton><TenantButton variant="outline">Outline button</TenantButton><TenantButton variant="ghost">Ghost button</TenantButton><TenantButton variant="danger">Delete</TenantButton><TenantButton variant="danger-outline">Delete outline</TenantButton></div>,
   },
   {
     id: "icon-button",
@@ -262,7 +263,7 @@ export const components = [
     tags: ["icon", "tooltip"],
     description: "Accessible square icon buttons with built-in labels and tooltips.",
     usage: '<TenantIconButton label="Search" icon={<Search size={16} />} />',
-    Preview: () => <div className="preview-row"><TenantIconButton label="Search" icon={<Search size={16} />} /><TenantIconButton label="Filter" icon={<Filter size={16} />} variant="soft" /><TenantIconButton label="Upload" icon={<Upload size={16} />} /></div>,
+    Preview: () => <div className="preview-row"><TenantIconButton label="Search" icon={<Search size={16} />} /><TenantIconButton label="Filter" icon={<Filter size={16} />} variant="soft" /><TenantIconButton label="Upload" icon={<Upload size={16} />} variant="ghost" /><TenantIconButton label="Remove" icon={<X size={16} />} variant="danger" /></div>,
   },
   {
     id: "badges",
@@ -272,8 +273,8 @@ export const components = [
     status: "ready",
     tags: ["chip", "tag", "filter"],
     description: "Small removable or static tags for filters, locations, and issue types.",
-    usage: '<TenantBadge tone="success">Edinburgh</TenantBadge>',
-    Preview: () => <div className="preview-row"><TenantBadge tone="success">Edinburgh</TenantBadge><TenantBadge>Private landlord</TenantBadge><TenantBadge tone="warning">In progress</TenantBadge><TenantBadge tone="danger">Flagged</TenantBadge></div>,
+    usage: '<TenantBadge tone="success" variant="outline">Edinburgh</TenantBadge>',
+    Preview: () => <div className="preview-row"><TenantBadge tone="success">Edinburgh</TenantBadge><TenantBadge>Private landlord</TenantBadge><TenantBadge tone="warning">In progress</TenantBadge><TenantBadge tone="danger">Flagged</TenantBadge><TenantBadge tone="success" variant="outline">Outline</TenantBadge></div>,
   },
   {
     id: "text-input",
@@ -283,8 +284,8 @@ export const components = [
     status: "ready",
     tags: ["field", "forms"],
     description: "TenantAct text field wrapper around MUI TextField.",
-    usage: '<TenantTextInput label="Text input" placeholder="Enter contact name..." />',
-    Preview: () => <TenantTextInput label="Text input" placeholder="Enter contact name..." />,
+    usage: '<TenantTextInput label="Text input" variant="quiet" helperText="Optional helper text" />',
+    Preview: () => <div className="preview-grid compact"><TenantTextInput label="Default input" placeholder="Enter contact name..." /><TenantTextInput label="Quiet input" variant="quiet" helperText="Uses transparent field chrome." /></div>,
   },
   {
     id: "search-input",
@@ -294,8 +295,8 @@ export const components = [
     status: "ready",
     tags: ["search", "field"],
     description: "Search field with leading icon for catalogues and data tables.",
-    usage: '<TenantSearchInput placeholder="Search decisions..." />',
-    Preview: () => <TenantSearchInput placeholder="Search decisions..." />,
+    usage: '<TenantSearchInput placeholder="Search decisions..." variant="quiet" />',
+    Preview: () => <div className="preview-grid compact"><TenantSearchInput placeholder="Search decisions..." /><TenantSearchInput placeholder="Quiet search..." variant="quiet" helperText="Quiet variant for soft surfaces." /></div>,
   },
   {
     id: "textarea",
@@ -305,8 +306,8 @@ export const components = [
     status: "ready",
     tags: ["message", "notes"],
     description: "Multi-line text area for notes, messages, and reportback prompts.",
-    usage: '<TenantTextarea label="Textarea" placeholder="Write a note..." />',
-    Preview: () => <TenantTextarea label="Textarea" placeholder="Write a note or message..." />,
+    usage: '<TenantTextarea label="Textarea" placeholder="Write a note..." minRows={6} variant="quiet" />',
+    Preview: () => <div className="preview-grid compact"><TenantTextarea label="Default textarea" placeholder="Write a note or message..." /><TenantTextarea label="Quiet tall textarea" placeholder="Write a longer demonstration note..." minRows={6} variant="quiet" maxLength={500} /></div>,
   },
   {
     id: "select",
@@ -316,8 +317,8 @@ export const components = [
     status: "ready",
     tags: ["menu", "field"],
     description: "Select control for constrained option sets.",
-    usage: '<TenantSelect label="Select" options={options} />',
-    Preview: () => <TenantSelect label="Select an option" options={[{ label: "Repair", value: "repair" }, { label: "Deposit", value: "deposit" }]} />,
+    usage: '<TenantSelect label="Select" options={options} variant="quiet" />',
+    Preview: () => <div className="preview-grid compact"><TenantSelect label="Default select" options={[{ label: "Repair", value: "repair" }, { label: "Deposit", value: "deposit" }]} /><TenantSelect label="Quiet select" variant="quiet" options={[{ label: "First option", value: "first" }, { label: "Second option", value: "second" }]} /></div>,
   },
   {
     id: "checks",
@@ -327,8 +328,8 @@ export const components = [
     status: "ready",
     tags: ["checkbox", "radio", "toggle"],
     description: "Accessible wrapped MUI controls for common form state.",
-    usage: "<TenantCheckbox label=\"Record summary after each call\" />",
-    Preview: () => <div className="stack"><TenantToggle label="Enable reportbacks" /><TenantCheckbox label="Record summary after each call" /><TenantRadioGroup /></div>,
+    usage: '<TenantRadioGroup direction="horizontal" size="medium" />',
+    Preview: () => <div className="stack"><TenantToggle label="Small toggle" /><TenantToggle label="Medium toggle" size="medium" /><TenantCheckbox label="Checked checkbox" /><TenantCheckbox label="Unchecked checkbox" checked={false} /><TenantRadioGroup /><TenantRadioGroup direction="horizontal" size="medium" options={["Phone", "SMS", "Email"]} /></div>,
   },
   {
     id: "tabs",
@@ -372,8 +373,8 @@ export const components = [
     status: "ready",
     tags: ["surface", "content"],
     description: "Generic content surface with optional icon, title, tone, and action.",
-    usage: '<TenantCard tone="soft" title="Reportbacks enabled">...</TenantCard>',
-    Preview: () => <TenantCard tone="soft" title="Reportbacks enabled" icon={<CheckCircle2 size={18} />}><p>Phonebankers will record what happened after each contact.</p></TenantCard>,
+    usage: '<TenantCard tone="accent" density="compact" interactive title="Reportbacks enabled">...</TenantCard>',
+    Preview: () => <div className="preview-grid compact"><TenantCard tone="soft" title="Soft card" icon={<CheckCircle2 size={18} />}><p>Default density with a soft surface.</p></TenantCard><TenantCard tone="accent" density="compact" interactive title="Accent compact" icon={<Sparkles size={18} />}><p>Compact density, accent tone, and hover treatment.</p></TenantCard></div>,
   },
   {
     id: "info-card",
@@ -383,8 +384,8 @@ export const components = [
     status: "ready",
     tags: ["feature", "help"],
     description: "Small explanatory card for feature panels and documentation snippets.",
-    usage: '<TenantInfoCard title="Organiser mode">...</TenantInfoCard>',
-    Preview: () => <TenantInfoCard title="Organiser mode">Notes, reportbacks and session hosting enabled.</TenantInfoCard>,
+    usage: '<TenantInfoCard title="Organiser mode" tone="accent">...</TenantInfoCard>',
+    Preview: () => <div className="preview-grid compact"><TenantInfoCard title="Default info" icon={<BookOpen size={18} />}>Notes, reportbacks and session hosting enabled.</TenantInfoCard><TenantInfoCard title="Accent info" tone="accent" icon={<Sparkles size={18} />} action="Open example">Accent tone with a custom action label.</TenantInfoCard></div>,
   },
   {
     id: "stat-card",
@@ -394,8 +395,8 @@ export const components = [
     status: "ready",
     tags: ["stats", "metric"],
     description: "Large number card for counts and performance summaries.",
-    usage: '<TenantStatCard value="1415" label="Results found" />',
-    Preview: () => <TenantStatCard value="1415" label="Results found" note="Across all locations and issues." icon={<Database size={18} />} />,
+    usage: '<TenantStatCard value="1415" label="Results found" tone="accent" />',
+    Preview: () => <div className="preview-grid compact"><TenantStatCard value="1415" label="Results found" note="Default metric card." icon={<Database size={18} />} /><TenantStatCard value="87%" label="Completion" tone="accent" note="Accent metric card." icon={<PieChart size={18} />} /></div>,
   },
   {
     id: "table",
@@ -405,8 +406,8 @@ export const components = [
     status: "ready",
     tags: ["contacts", "results"],
     description: "Responsive table styling for people, cases, and tribunal results.",
-    usage: "<TenantTable rows={rows} />",
-    Preview: () => <TenantTable rows={rows} />,
+    usage: '<TenantTable rows={rows} density="compact" variant="striped" />',
+    Preview: () => <div className="stack"><TenantTable rows={rows} /><TenantTable rows={rows.slice(0, 2)} density="compact" variant="striped" /></div>,
   },
   {
     id: "table-toolbar",
@@ -416,8 +417,8 @@ export const components = [
     status: "ready",
     tags: ["sort", "results"],
     description: "Result-count and sort toolbar for dense data views.",
-    usage: "<TenantTableToolbar resultCount={1415} />",
-    Preview: () => <TenantTableToolbar />,
+    usage: '<TenantTableToolbar resultCount={1415} density="compact" />',
+    Preview: () => <div className="stack"><TenantTableToolbar /><TenantTableToolbar resultCount={132} density="compact" /></div>,
   },
   {
     id: "pagination",
@@ -427,8 +428,8 @@ export const components = [
     status: "ready",
     tags: ["pages", "results"],
     description: "Compact pagination for search results and admin tables.",
-    usage: "<TenantPagination page={1} total={71} />",
-    Preview: TenantPagination,
+    usage: '<TenantPagination page={1} total={71} size="small" />',
+    Preview: () => <div className="stack"><TenantPagination /><TenantPagination page={2} total={9} size="small" /></div>,
   },
   {
     id: "filter-builder",
@@ -438,8 +439,8 @@ export const components = [
     status: "ready",
     tags: ["filters", "search"],
     description: "Mock filter builder pattern for advanced search flows.",
-    usage: "<TenantFilterBuilder />",
-    Preview: TenantFilterBuilder,
+    usage: '<TenantFilterBuilder variant="stacked" />',
+    Preview: () => <div className="preview-grid compact"><TenantFilterBuilder /><TenantFilterBuilder variant="stacked" /></div>,
   },
   {
     id: "command-palette",
@@ -449,8 +450,8 @@ export const components = [
     status: "ready",
     tags: ["command", "keyboard"],
     description: "Mock command palette for future keyboard-led catalogue and admin flows.",
-    usage: "<TenantCommandPalette />",
-    Preview: TenantCommandPalette,
+    usage: '<TenantCommandPalette variant="floating" />',
+    Preview: () => <div className="preview-grid compact"><TenantCommandPalette /><TenantCommandPalette variant="floating" /></div>,
   },
   {
     id: "alert-banner",
@@ -460,8 +461,8 @@ export const components = [
     status: "ready",
     tags: ["success", "warning", "error"],
     description: "Inline feedback banner for success, warning, info, and error states.",
-    usage: '<TenantAlertBanner tone="success">Saved.</TenantAlertBanner>',
-    Preview: () => <div className="stack"><TenantAlertBanner tone="success">Success! Your reportbacks were saved.</TenantAlertBanner><TenantAlertBanner tone="warning">Heads up! This contact has opted out.</TenantAlertBanner><TenantAlertBanner tone="danger">Error: Unable to save. Try again.</TenantAlertBanner></div>,
+    usage: '<TenantAlertBanner tone="success" variant="solid">Saved.</TenantAlertBanner>',
+    Preview: () => <div className="stack"><TenantAlertBanner tone="success">Success! Your reportbacks were saved.</TenantAlertBanner><TenantAlertBanner tone="warning">Heads up! This contact has opted out.</TenantAlertBanner><TenantAlertBanner tone="danger">Error: Unable to save. Try again.</TenantAlertBanner><TenantAlertBanner tone="info" variant="solid">Solid info variant for higher emphasis.</TenantAlertBanner></div>,
   },
   {
     id: "status-pill",
@@ -471,8 +472,8 @@ export const components = [
     status: "ready",
     tags: ["status", "state"],
     description: "Semantic status chip for workflows, cases, contacts, and catalogue entries.",
-    usage: '<TenantStatusPill status="in-progress" />',
-    Preview: () => <div className="preview-row"><TenantStatusPill status="ready" /><TenantStatusPill status="active" /><TenantStatusPill status="in-progress" /><TenantStatusPill status="draft" /><TenantStatusPill status="error" /></div>,
+    usage: '<TenantStatusPill status="in-progress" variant="outline" />',
+    Preview: () => <div className="preview-row"><TenantStatusPill status="ready" /><TenantStatusPill status="active" /><TenantStatusPill status="in-progress" /><TenantStatusPill status="draft" /><TenantStatusPill status="error" /><TenantStatusPill status="ready" variant="outline">Outline</TenantStatusPill></div>,
   },
   {
     id: "callout",
@@ -482,8 +483,8 @@ export const components = [
     status: "ready",
     tags: ["note", "guidance"],
     description: "Contextual note box for sensitive guidance and organiser-facing help.",
-    usage: '<TenantCalloutBox title="Note">...</TenantCalloutBox>',
-    Preview: () => <TenantCalloutBox title="Reportbacks enabled">Phonebankers will record what happened after each contact and send a summary.</TenantCalloutBox>,
+    usage: '<TenantCalloutBox tone="warning" variant="solid" title="Note">...</TenantCalloutBox>',
+    Preview: () => <div className="preview-grid compact"><TenantCalloutBox title="Reportbacks enabled">Phonebankers will record what happened after each contact and send a summary.</TenantCalloutBox><TenantCalloutBox tone="warning" title="Warning note">Use warning tone when the user needs to pause and check something.</TenantCalloutBox><TenantCalloutBox tone="success" variant="solid" title="Solid callout">Use solid treatment for one high-emphasis panel.</TenantCalloutBox></div>,
   },
   {
     id: "modal",
@@ -516,7 +517,7 @@ export const components = [
     tags: ["workflow", "stages"],
     description: "Horizontal and vertical progress steps for campaign setup flows.",
     usage: "<TenantStepper steps={steps} current={2} />",
-    Preview: () => <TenantStepper current={2} steps={["Import contacts", "Write messages", "Call notes", "Start contacting"]} />,
+    Preview: () => <div className="preview-grid compact"><TenantStepper current={2} steps={["Import contacts", "Write messages", "Call notes", "Start contacting"]} /><TenantStepper vertical current={1} steps={["First step", "Second step", "Third step"]} /></div>,
   },
   {
     id: "progress-bar",
@@ -526,8 +527,8 @@ export const components = [
     status: "ready",
     tags: ["completion", "loading"],
     description: "Linear progress indicator themed through TenantAct tokens.",
-    usage: '<TenantProgressBar value={62} label="Stage 3 of 4" />',
-    Preview: () => <TenantProgressBar value={62} label="Stage 3 of 4" />,
+    usage: '<TenantProgressBar value={62} tone="warning" size="large" />',
+    Preview: () => <div className="stack"><TenantProgressBar value={62} label="Primary medium" /><TenantProgressBar value={42} label="Warning small" tone="warning" size="small" /><TenantProgressBar value={88} label="Danger large" tone="danger" size="large" /></div>,
   },
   {
     id: "mobile-bottom-nav",
@@ -537,8 +538,8 @@ export const components = [
     status: "ready",
     tags: ["mobile", "navigation"],
     description: "Bottom navigation pattern for compact organiser tools.",
-    usage: "<TenantMobileBottomNav items={items} />",
-    Preview: () => <TenantMobileBottomNav items={[{ label: "Home", icon: <Home size={17} /> }, { label: "Cases", icon: <FileText size={17} /> }, { label: "People", icon: <Users size={17} /> }, { label: "More", icon: <MoreIcon /> }]} />,
+    usage: '<TenantMobileBottomNav items={items} defaultActive={1} variant="floating" />',
+    Preview: () => <div className="stack"><TenantMobileBottomNav items={[{ label: "Home", icon: <Home size={17} /> }, { label: "Cases", icon: <FileText size={17} /> }, { label: "People", icon: <Users size={17} /> }, { label: "More", icon: <MoreIcon /> }]} /><TenantMobileBottomNav defaultActive={1} variant="floating" items={[{ label: "Home", icon: <Home size={17} /> }, { label: "Cases", icon: <FileText size={17} /> }, { label: "People", icon: <Users size={17} /> }, { label: "More", icon: <MoreIcon /> }]} /></div>,
   },
   {
     id: "bottom-sheet",
@@ -548,8 +549,8 @@ export const components = [
     status: "ready",
     tags: ["mobile", "panel"],
     description: "Static mock of a mobile bottom sheet for call notes and short forms.",
-    usage: '<TenantBottomSheet title="Call notes">...</TenantBottomSheet>',
-    Preview: () => <TenantBottomSheet title="Call notes"><TenantCalloutBox title="How this appears to phonebankers">No call notes yet.</TenantCalloutBox></TenantBottomSheet>,
+    usage: '<TenantBottomSheet title="Call notes" height="tall">...</TenantBottomSheet>',
+    Preview: () => <div className="preview-grid compact"><TenantBottomSheet title="Call notes"><TenantCalloutBox title="How this appears to phonebankers">No call notes yet.</TenantCalloutBox></TenantBottomSheet><TenantBottomSheet title="Tall sheet" height="tall"><TenantTextarea label="Sheet textarea" placeholder="Write in a taller mobile surface..." minRows={3} /></TenantBottomSheet></div>,
   },
   {
     id: "upload-dropzone",
@@ -559,8 +560,8 @@ export const components = [
     status: "ready",
     tags: ["csv", "import"],
     description: "Import surface for contacts, evidence, and case attachments.",
-    usage: "<TenantUploadDropzone />",
-    Preview: TenantUploadDropzone,
+    usage: '<TenantUploadDropzone tone="compact" />',
+    Preview: () => <div className="preview-grid compact"><TenantUploadDropzone /><TenantUploadDropzone tone="compact" /></div>,
   },
   {
     id: "timeline",
@@ -570,8 +571,8 @@ export const components = [
     status: "ready",
     tags: ["case", "history"],
     description: "Chronological case history for evidence, calls, and organiser actions.",
-    usage: "<TenantTimeline items={items} />",
-    Preview: () => <TenantTimeline items={timelineItems} />,
+    usage: '<TenantTimeline items={items} density="compact" />',
+    Preview: () => <div className="preview-grid compact"><TenantTimeline items={timelineItems} /><TenantTimeline items={timelineItems.slice(0, 2)} density="compact" /></div>,
   },
   {
     id: "activity-feed",
@@ -581,8 +582,8 @@ export const components = [
     status: "ready",
     tags: ["activity", "updates"],
     description: "Recent activity stream for shared sessions and admin dashboards.",
-    usage: "<TenantActivityFeed items={items} />",
-    Preview: () => <TenantActivityFeed items={feedItems} />,
+    usage: '<TenantActivityFeed items={items} density="compact" />',
+    Preview: () => <div className="preview-grid compact"><TenantActivityFeed items={feedItems} /><TenantActivityFeed items={feedItems} density="compact" /></div>,
   },
   {
     id: "empty-state",
@@ -592,8 +593,8 @@ export const components = [
     status: "ready",
     tags: ["empty", "results"],
     description: "Reusable empty state for filters, tables, uploads, and search results.",
-    usage: "<TenantEmptyState />",
-    Preview: TenantEmptyState,
+    usage: '<TenantEmptyState tone="compact" action={<TenantButton />}>...</TenantEmptyState>',
+    Preview: () => <div className="preview-grid compact"><TenantEmptyState /><TenantEmptyState title="Compact empty state" tone="compact" action={<TenantButton variant="outline">Add item</TenantButton>}>This compact empty state has a custom action.</TenantEmptyState></div>,
   },
   {
     id: "advanced-breadcrumb-trail",
@@ -1539,12 +1540,14 @@ function XIcon() {
 
 function TabsPreview() {
   const [value, setValue] = useState("overview");
-  return <TenantTabs value={value} onChange={setValue} tabs={[{ label: "Overview", value: "overview" }, { label: "Usage", value: "usage" }, { label: "Props", value: "props" }]} />;
+  const tabs = [{ label: "Overview", value: "overview" }, { label: "Usage", value: "usage" }, { label: "Props", value: "props" }];
+  return <div className="stack"><TenantTabs value={value} onChange={setValue} tabs={tabs} /><TenantTabs value={value} onChange={setValue} tabs={tabs} variant="pill" size="small" /></div>;
 }
 
 function SegmentedPreview() {
   const [value, setValue] = useState("grid");
-  return <TenantSegmentedControl value={value} onChange={setValue} options={[{ label: "Grid", value: "grid" }, { label: "List", value: "list" }]} />;
+  const options = [{ label: "Grid", value: "grid" }, { label: "List", value: "list" }];
+  return <div className="preview-row"><TenantSegmentedControl value={value} onChange={setValue} options={options} /><TenantSegmentedControl value={value} onChange={setValue} options={options} size="small" tone="success" /></div>;
 }
 
 function CampaignPlatformTabsPreview() {

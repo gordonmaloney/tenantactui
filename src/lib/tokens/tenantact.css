@@ -24,27 +24,34 @@
 
 :root,
 [data-theme="light"] {
-  --ta-green: #1e633b;
-  --ta-green-dark: #13582b;
+  color-scheme: light;
+  --ta-green: #317144;
+  --ta-green-dark: #285c37;
   --ta-green-soft: #dcefe2;
   --ta-green-soft-2: #eef7f0;
-  --ta-bg: #f6f4ed;
-  --ta-bg-warm: #fffefa;
-  --ta-surface: #fffefa;
-  --ta-surface-muted: #f1f6ef;
+  --ta-bg: #f6f7f2;
+  --ta-bg-warm: #fbfcfc;
+  --ta-surface: #ffffff;
+  --ta-surface-muted: #e8edeb;
   --ta-surface-raised: #ffffff;
-  --ta-border: #dedbd0;
-  --ta-border-strong: #c9c4b7;
-  --ta-text: #141817;
-  --ta-text-muted: #626b64;
-  --ta-text-soft: #7e857f;
+  --ta-border: rgba(21, 29, 23, 0.11);
+  --ta-border-strong: rgba(21, 29, 23, 0.22);
+  --ta-text: #151d17;
+  --ta-text-muted: #596760;
+  --ta-text-soft: rgba(21, 29, 23, 0.68);
   --ta-warning: #b87612;
   --ta-warning-soft: #fff3d7;
-  --ta-danger: #d64a45;
+  --ta-danger: #a24b43;
   --ta-danger-soft: #ffe6e3;
-  --ta-success: #1e7b3b;
+  --ta-success: #317144;
   --ta-info: #2f6f9f;
   --ta-info-soft: #e5f0f7;
+  --ta-chip-bg: #eeece5;
+  --ta-code-bg: #171b18;
+  --ta-code-text: #eef7f0;
+  --ta-preview-grid: rgba(49, 113, 68, 0.08);
+  --ta-preview-wash-1: rgba(255, 255, 255, 0.66);
+  --ta-preview-wash-2: rgba(232, 237, 235, 0.72);
   --ta-radius-xs: 4px;
   --ta-radius-sm: 6px;
   --ta-radius-md: 8px;
@@ -58,7 +65,36 @@
 }
 
 [data-theme="dark"] {
-  /* To be implemented later. Keep component colours token-driven for this future theme. */
+  color-scheme: dark;
+  --ta-green: #4fa56d;
+  --ta-green-dark: #78c08f;
+  --ta-green-soft: #233a2b;
+  --ta-green-soft-2: #18291f;
+  --ta-bg: #101613;
+  --ta-bg-warm: #0f130f;
+  --ta-surface: #18231d;
+  --ta-surface-muted: #202c25;
+  --ta-surface-raised: #1d2a22;
+  --ta-border: rgba(232, 240, 234, 0.16);
+  --ta-border-strong: rgba(232, 240, 234, 0.28);
+  --ta-text: #e8f0ea;
+  --ta-text-muted: #aebdb2;
+  --ta-text-soft: #88998e;
+  --ta-warning: #efc76a;
+  --ta-warning-soft: #3b2e14;
+  --ta-danger: #f08a7d;
+  --ta-danger-soft: #3f1f1d;
+  --ta-success: #78c08f;
+  --ta-info: #8ab9df;
+  --ta-info-soft: #1b2c38;
+  --ta-chip-bg: #263129;
+  --ta-code-bg: #090d0b;
+  --ta-code-text: #e8f0ea;
+  --ta-preview-grid: rgba(79, 165, 109, 0.12);
+  --ta-preview-wash-1: rgba(24, 35, 29, 0.84);
+  --ta-preview-wash-2: rgba(32, 44, 37, 0.78);
+  --ta-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.36), 0 8px 24px rgba(0, 0, 0, 0.24);
+  --ta-shadow-md: 0 18px 44px rgba(0, 0, 0, 0.38);
 }
 
 * {
