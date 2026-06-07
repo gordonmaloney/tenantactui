@@ -17,6 +17,7 @@ import {
   Home,
   LayoutDashboard,
   ListChecks,
+  Highlighter,
   MessageSquare,
   MousePointer2,
   PanelRight,
@@ -36,6 +37,7 @@ import {
 } from "lucide-react";
 import {
   TenantActivityFeed,
+  TenantAccentPhrase,
   TenantAlertBanner,
   TenantBadge,
   TenantBottomSheet,
@@ -72,10 +74,13 @@ import {
   TenantCheckbox,
   TenantModal,
   TenantSidePanel,
+  tenantBrushStrokes,
 } from "../../lib";
 
 export const categories = [
   { id: "foundations", name: "Foundations", icon: Box, count: 12 },
+  { id: "highlights", name: "Highlights", icon: Highlighter, count: 7 },
+  { id: "demos", name: "Demo page", icon: Sparkles, count: 1 },
   { id: "navigation", name: "Navigation", icon: LayoutDashboard, count: 14 },
   { id: "buttons", name: "Buttons and actions", icon: MousePointer2, count: 18 },
   { id: "forms", name: "Inputs and forms", icon: FormInput, count: 22 },
@@ -145,6 +150,64 @@ export const components = [
     description: "Condensed display headings, readable body copy, and mono labels for organiser workflows.",
     usage: "<TenantTypographySample />",
     Preview: TenantTypographySample,
+  },
+  {
+    id: "accent-phrase",
+    name: "Accent phrase",
+    category: "highlights",
+    type: "typography",
+    status: "ready",
+    tags: ["brush", "highlight", "heading", "accent"],
+    description: "ReachOut-style accent phrase component for underlining one phrase with a dark green brush stroke.",
+    usage: '<TenantAccentPhrase phrase="TENANTS" variant="sweep" as="h2">BUILT FOR TENANTS</TenantAccentPhrase>',
+    notes: "Use sparingly in page headers, stage titles, and campaign moments. It should mark a key phrase, not decorate every heading.",
+    Preview: AccentPhrasePreview,
+  },
+  {
+    id: "brush-stroke-variants",
+    name: "Brush stroke variants",
+    category: "highlights",
+    type: "asset",
+    status: "ready",
+    tags: ["brush", "assets", "underline"],
+    description: "Seven brush stroke assets: four copied from ReachOut and three new TenantAct UI variants.",
+    usage: 'import { tenantBrushStrokes } from "@tenantact/ui";',
+    notes: "The copied PNG variants preserve existing ReachOut behaviour. The generated PNG variants are messy ink and paint strokes for new TenantAct UI emphasis.",
+    Preview: BrushVariantsPreview,
+  },
+  {
+    id: "stage-title-highlight",
+    name: "Stage title highlight",
+    category: "highlights",
+    type: "pattern",
+    status: "ready",
+    tags: ["stage", "title", "workflow"],
+    description: "Stage title pattern for multi-step campaign and organiser workflows.",
+    usage: '<TenantAccentPhrase phrase="REPORTBACKS" variant={2} as="h2">CALL NOTES AND REPORTBACKS</TenantAccentPhrase>',
+    Preview: StageHighlightPreview,
+  },
+  {
+    id: "inline-highlight",
+    name: "Inline highlight",
+    category: "highlights",
+    type: "typography",
+    status: "ready",
+    tags: ["inline", "copy", "emphasis"],
+    description: "Subtler inline use for short explanatory copy and callout text.",
+    usage: '<TenantAccentPhrase phrase="trusted" variant="ragged">Clear, trusted and accessible tools</TenantAccentPhrase>',
+    Preview: InlineHighlightPreview,
+  },
+  {
+    id: "tenantact-demo-page",
+    name: "Full component demo page",
+    category: "demos",
+    type: "demo",
+    status: "ready",
+    tags: ["demo", "all components", "showcase", "sections"],
+    description: "A single composed demonstration page with sections that render the reusable patterns across the whole catalogue.",
+    usage: "<TenantActDemoPage />",
+    notes: "This page is for visual inspection in context, so it intentionally does not show example usage metadata.",
+    Preview: TenantActCompleteDemoPagePreview,
   },
   {
     id: "brand-lockups",
@@ -288,6 +351,18 @@ export const components = [
     description: "Small segmented control for switching view modes and simple filters.",
     usage: "<TenantSegmentedControl options={options} value={value} onChange={setValue} />",
     Preview: () => <SegmentedPreview />,
+  },
+  {
+    id: "campaign-platform-tabs",
+    name: "Campaign platform tabs",
+    category: "tabs",
+    type: "tabs",
+    status: "ready",
+    tags: ["tabs", "campaign", "sharing", "composer"],
+    description: "Large platform tab pattern inspired by Amplify's campaign share composer, with channel tabs, guidance, message preview, and primary action.",
+    usage: "<TenantCampaignPlatformTabs platforms={platforms} />",
+    notes: "Use for cross-channel campaign publishing where the selected tab changes the guidance, message treatment, and primary action.",
+    Preview: CampaignPlatformTabsPreview,
   },
   {
     id: "card",
@@ -1093,6 +1168,311 @@ function ProtectedSessionPreview() {
   return <div className="exp-grid two"><div className="exp-card"><strong>Protected session</strong><p>••••••••••••</p><TenantStatusPill status="ready">Password protected</TenantStatusPill></div><div className="exp-card"><strong>Session expiry</strong><TenantStatusPill status="ready">Expires in 23h 45m</TenantStatusPill></div></div>;
 }
 
+function AccentPhrasePreview() {
+  return (
+    <div className="highlight-preview">
+      <TenantAccentPhrase phrase="TENANTS" variant="sweep" as="h2">
+        BUILT FOR TENANTS
+      </TenantAccentPhrase>
+      <p>Use an accent phrase to give one important word the TenantAct campaign emphasis.</p>
+    </div>
+  );
+}
+
+function BrushVariantsPreview() {
+  return (
+    <div className="brush-variant-grid">
+      {tenantBrushStrokes.map((brush, index) => (
+        <article key={brush.id}>
+          <strong>{index + 1}. {brush.id}</strong>
+          <div className="brush-variant-swatch">
+            <img src={brush.src} alt="" style={{ transform: brush.transform }} />
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function StageHighlightPreview() {
+  return (
+    <div className="stage-highlight-preview">
+      <span>Stage 3 of 4</span>
+      <TenantAccentPhrase phrase="REPORTBACKS" variant={2} as="h2">
+        CALL NOTES AND REPORTBACKS
+      </TenantAccentPhrase>
+      <p>Add phonebanking prompts and choose what people should report back after each contact.</p>
+    </div>
+  );
+}
+
+function InlineHighlightPreview() {
+  return (
+    <div className="inline-highlight-preview">
+      <p>
+        <TenantAccentPhrase phrase="trusted" variant="ragged">
+          Clear, trusted and accessible tools
+        </TenantAccentPhrase>{" "}
+        for campaigning, organising and tenant justice.
+      </p>
+    </div>
+  );
+}
+
+function TenantActCompleteDemoPagePreview() {
+  const componentGroups = categories
+    .filter((category) => category.id !== "demos")
+    .map((category) => ({
+      category,
+      items: components.filter((component) => component.category === category.id),
+    }))
+    .filter((group) => group.items.length > 0);
+
+  return (
+    <div className="demo-all-page">
+      <header className="demo-all-page__hero">
+        <p className="eyebrow">Full demo page</p>
+        <h3>TenantAct UI components in one place</h3>
+        <p>This page demonstrates the catalogue components together. Each section below is included for visual review and component comparison.</p>
+      </header>
+
+      <section className="demo-all-page__section">
+        <div className="demo-all-page__section-title">
+          <span>01</span>
+          <div>
+            <h4>Composed controls section</h4>
+            <p>This section combines cards, buttons, tabs, segmented controls, badges, alerts, and status elements.</p>
+          </div>
+        </div>
+        <ControlsDemoPagePreview />
+      </section>
+
+      <section className="demo-all-page__section">
+        <div className="demo-all-page__section-title">
+          <span>02</span>
+          <div>
+            <h4>Composed form section</h4>
+            <p>This section combines text fields, search, select, textarea, choice controls, progress, and guidance.</p>
+          </div>
+        </div>
+        <FormDemoPagePreview />
+      </section>
+
+      <section className="demo-all-page__section">
+        <div className="demo-all-page__section-title">
+          <span>03</span>
+          <div>
+            <h4>Composed data section</h4>
+            <p>This section combines metrics, table controls, table rows, pagination, empty state, and activity feed.</p>
+          </div>
+        </div>
+        <DataDemoPagePreview />
+      </section>
+
+      {componentGroups.map((group, groupIndex) => {
+        const Icon = group.category.icon;
+        return (
+          <section className="demo-all-page__section" key={group.category.id}>
+            <div className="demo-all-page__section-title">
+              <span>{String(groupIndex + 4).padStart(2, "0")}</span>
+              <div>
+                <h4><Icon size={17} /> {group.category.name}</h4>
+                <p>This section renders every catalogue preview currently listed under {group.category.name.toLowerCase()}.</p>
+              </div>
+            </div>
+            <div className="demo-all-page__component-grid">
+              {group.items.map((component) => {
+                const Preview = component.Preview;
+                return (
+                  <article className="demo-all-page__component" key={component.id}>
+                    <header>
+                      <strong>{component.name}</strong>
+                      <TenantStatusPill status={component.status} />
+                    </header>
+                    <div>
+                      <Preview />
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        );
+      })}
+    </div>
+  );
+}
+
+function ControlsDemoPagePreview() {
+  const [tab, setTab] = useState("one");
+  const [view, setView] = useState("cards");
+
+  return (
+    <div className="demo-page-preview">
+      <header className="demo-page-preview__header">
+        <div>
+          <p className="eyebrow">Demo page</p>
+          <h3>Controls demonstration</h3>
+          <p>This page shows several TenantAct controls arranged together in one surface.</p>
+        </div>
+        <TenantStatusPill status="ready">Demonstration</TenantStatusPill>
+      </header>
+
+      <TenantAlertBanner tone="success">This is a success alert used as part of a demonstration page.</TenantAlertBanner>
+
+      <div className="demo-page-preview__toolbar">
+        <TenantTabs
+          value={tab}
+          onChange={setTab}
+          tabs={[
+            { label: "First tab", value: "one" },
+            { label: "Second tab", value: "two" },
+            { label: "Third tab", value: "three" },
+          ]}
+        />
+        <TenantSegmentedControl
+          value={view}
+          onChange={setView}
+          options={[
+            { label: "Cards", value: "cards" },
+            { label: "List", value: "list" },
+          ]}
+        />
+      </div>
+
+      <div className="demo-page-preview__grid">
+        <TenantCard
+          tone="soft"
+          title="A component card"
+          eyebrow="Example"
+          icon={<Box size={18} />}
+          action={<TenantButton variant="outline">Secondary action</TenantButton>}
+        >
+          <p>This card contains body copy, one icon, one eyebrow, and one action.</p>
+        </TenantCard>
+        <TenantInfoCard title="Information card" icon={<BookOpen size={18} />}>
+          This card demonstrates an information pattern with compact explanatory text.
+        </TenantInfoCard>
+        <TenantCard title="Three buttons" icon={<MousePointer2 size={18} />}>
+          <p>This component group contains three button variants.</p>
+          <div className="preview-row">
+            <TenantButton>Primary</TenantButton>
+            <TenantButton variant="outline">Outline</TenantButton>
+            <TenantButton variant="ghost">Ghost</TenantButton>
+          </div>
+        </TenantCard>
+      </div>
+
+      <div className="preview-row">
+        <TenantBadge tone="success">Success badge</TenantBadge>
+        <TenantBadge>Neutral badge</TenantBadge>
+        <TenantBadge tone="warning">Warning badge</TenantBadge>
+        <TenantStatusPill status="active">Active state</TenantStatusPill>
+        <TenantIconButton label="Copy item" icon={<FileText size={16} />} />
+      </div>
+    </div>
+  );
+}
+
+function FormDemoPagePreview() {
+  return (
+    <div className="demo-page-preview">
+      <header className="demo-page-preview__header">
+        <div>
+          <p className="eyebrow">Demo page</p>
+          <h3>Form demonstration</h3>
+          <p>This page shows form controls, progress indicators, and helper surfaces.</p>
+        </div>
+        <TenantProgressBar value={64} label="Example completion" />
+      </header>
+
+      <TenantStepper current={1} steps={["First step", "Second step", "Third step", "Fourth step"]} />
+
+      <div className="demo-page-preview__form-grid">
+        <TenantTextInput label="Text input" placeholder="Type demonstration text..." />
+        <TenantSearchInput placeholder="Search demonstration options..." />
+        <TenantSelect
+          label="Select input"
+          options={[
+            { label: "First option", value: "first" },
+            { label: "Second option", value: "second" },
+            { label: "Third option", value: "third" },
+          ]}
+        />
+        <TenantTextarea label="Textarea" placeholder="Write a short demonstration note..." />
+      </div>
+
+      <div className="demo-page-preview__grid">
+        <TenantCard title="Choice controls" icon={<ListChecks size={18} />}>
+          <div className="stack">
+            <TenantToggle label="Toggle control" />
+            <TenantCheckbox label="Checkbox control" />
+            <TenantRadioGroup
+              options={[
+                "First radio",
+                "Second radio",
+              ]}
+            />
+          </div>
+        </TenantCard>
+        <TenantCalloutBox title="Demonstration note">
+          This note explains that the surrounding form controls are present for visual testing.
+        </TenantCalloutBox>
+      </div>
+    </div>
+  );
+}
+
+function DataDemoPagePreview() {
+  const demoRows = [
+    { name: "Example row one", phone: "Value A", last: "Today", status: "ready", label: "Ready" },
+    { name: "Example row two", phone: "Value B", last: "Yesterday", status: "in-progress", label: "In progress" },
+    { name: "Example row three", phone: "Value C", last: "Last week", status: "draft", label: "Draft" },
+  ];
+
+  return (
+    <div className="demo-page-preview">
+      <header className="demo-page-preview__header">
+        <div>
+          <p className="eyebrow">Demo page</p>
+          <h3>Data demonstration</h3>
+          <p>This page shows table, metric, empty, filter, pagination, and activity components.</p>
+        </div>
+        <TenantButton icon="arrow">Example action</TenantButton>
+      </header>
+
+      <div className="demo-page-preview__metrics">
+        <TenantStatCard value="24" label="Example count" note="This is a demonstration metric." icon={<Database size={18} />} />
+        <TenantStatCard value="87%" label="Example percentage" note="This is a second demonstration metric." icon={<PieChart size={18} />} />
+        <TenantCard title="Filter summary" icon={<Filter size={18} />}>
+          <div className="preview-row">
+            <TenantBadge tone="success">Filter one</TenantBadge>
+            <TenantBadge tone="success">Filter two</TenantBadge>
+          </div>
+        </TenantCard>
+      </div>
+
+      <div className="demo-page-preview__table">
+        <TenantTableToolbar resultCount={demoRows.length} />
+        <TenantTable rows={demoRows} />
+        <TenantPagination page={1} total={4} />
+      </div>
+
+      <div className="demo-page-preview__grid">
+        <TenantEmptyState title="Empty state demonstration">
+          This empty state uses literal demonstration copy.
+        </TenantEmptyState>
+        <TenantActivityFeed
+          items={[
+            { initials: "A", title: "First demonstration event", text: "This activity item exists to show spacing.", time: "Now" },
+            { initials: "B", title: "Second demonstration event", text: "This is another literal activity item.", time: "Later" },
+          ]}
+        />
+      </div>
+    </div>
+  );
+}
+
 function ShareOptionsPreview() {
   return <div className="preview-row">{["Email","WhatsApp","SMS","Copy link","More"].map((item) => <button className="exp-share" key={item}><Share2 size={15} />{item}</button>)}</div>;
 }
@@ -1167,6 +1547,57 @@ function SegmentedPreview() {
   return <TenantSegmentedControl value={value} onChange={setValue} options={[{ label: "Grid", value: "grid" }, { label: "List", value: "list" }]} />;
 }
 
+function CampaignPlatformTabsPreview() {
+  const platforms = [
+    { id: "whatsapp", label: "WhatsApp", icon: <Phone size={24} />, helper: "Best for trusted group chats and direct asks.", action: "Share on WhatsApp" },
+    { id: "instagram", label: "Instagram", icon: <CameraIcon />, helper: "Best for a story or grid post. Copy the text, download the image, then publish manually.", action: "Share on Instagram" },
+    { id: "facebook", label: "Facebook", icon: <strong>f</strong>, helper: "Best for local groups where people can comment, tag neighbours, and share.", action: "Share on Facebook" },
+    { id: "bluesky", label: "Bluesky", icon: <Share2 size={24} />, helper: "Best when a short context line can travel with a link.", action: "Share on Bluesky" },
+    { id: "signal", label: "Signal", icon: <MessageSquare size={24} />, helper: "Best for smaller trusted organising circles.", action: "Share on Signal" },
+  ];
+  const [activeId, setActiveId] = useState("instagram");
+  const active = platforms.find((platform) => platform.id === activeId) || platforms[0];
+
+  return (
+    <div className="campaign-tabs-preview">
+      <div className="campaign-tabs-preview__tabs" role="tablist" aria-label="Campaign platforms">
+        {platforms.map((platform) => (
+          <button
+            key={platform.id}
+            type="button"
+            className={active.id === platform.id ? "is-active" : ""}
+            onClick={() => setActiveId(platform.id)}
+            aria-selected={active.id === platform.id}
+            role="tab"
+          >
+            {platform.icon}
+            <span>{platform.label}</span>
+          </button>
+        ))}
+      </div>
+      <div className="campaign-tabs-preview__body">
+        <div className="campaign-tabs-preview__meta">
+          <span className="ta-card__icon">{active.icon}</span>
+          <div>
+            <strong>Your post template</strong>
+            <small>Prepared for {active.label}</small>
+          </div>
+          <p>{active.helper}</p>
+        </div>
+        <div className="campaign-tabs-preview__message">
+          <p>Repairs won after rent strike. Tenant organising works. Read the story: tenantact.org</p>
+          <aside>
+            <div className="campaign-tabs-preview__image"><strong>TENANT<br />WIN</strong></div>
+            <strong>Suggested campaign image</strong>
+            <small>Attach this image in the send step if you want the post to stand out.</small>
+          </aside>
+        </div>
+        <TenantButton size="large">{active.action}</TenantButton>
+      </div>
+    </div>
+  );
+}
+
 function OverlayPreview({ kind }) {
   const [open, setOpen] = useState(false);
   const isModal = kind === "modal";
@@ -1183,4 +1614,8 @@ function OverlayPreview({ kind }) {
 
 function MoreIcon() {
   return <BookOpen size={17} />;
+}
+
+function CameraIcon() {
+  return <span aria-hidden="true" className="exp-camera-icon" />;
 }

@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import {
   BookOpen,
   Check,
+  X,
   Code2,
   Copy,
   Home,
@@ -17,23 +18,46 @@ import { TenantSearchInput, TenantStatusPill } from "../lib";
 export default function App() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   const activeCategory = categories.find((item) => item.id === category);
   const isOverview = category === "all";
+  const isSearching = query.trim().length > 0;
+  const demoCategory = categories.find((item) => item.id === "demos");
+  const DemoIcon = demoCategory?.icon;
+  const componentCategories = categories.filter((item) => item.id !== "demos");
+  const demoComponents = components.filter((component) => component.category === "demos");
 
-  const filtered = useMemo(() => {
+  const searchResults = useMemo(() => {
     const needle = query.trim().toLowerCase();
+    if (!needle) return [];
+
     return components.filter((component) => {
-      const haystack = [component.name, component.description, component.type, component.status, ...component.tags].join(" ").toLowerCase();
-      return (!needle || haystack.includes(needle))
-        && (category === "all" || component.category === category);
+      const componentCategory = categories.find((item) => item.id === component.category)?.name || "";
+      const haystack = [
+        component.name,
+        component.description,
+        component.type,
+        component.status,
+        componentCategory,
+        ...component.tags,
+      ].join(" ").toLowerCase();
+      return haystack.includes(needle);
     });
-  }, [category, query]);
+  }, [query]);
+
+  const categoryComponents = useMemo(() => (
+    category === "all"
+      ? components
+      : components.filter((component) => component.category === category)
+  ), [category]);
 
   function chooseCategory(nextCategory) {
     setCategory(nextCategory);
+    setQuery("");
+    setMobileNavOpen(false);
     requestAnimationFrame(() => {
-      document.getElementById("top")?.scrollIntoView({ block: "start" });
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     });
   }
 
@@ -41,8 +65,8 @@ export default function App() {
     <div className="catalogue-shell" data-theme="light">
       <header className="topbar">
         <div className="brand">
-          <button className="mobile-menu" aria-label="Open navigation"><Menu size={18} /></button>
-          <a href="#top" className="brand-word"><span>TENANT</span>ACT UI</a>
+          <button className="mobile-menu" aria-label="Open navigation" onClick={() => setMobileNavOpen(true)}><Menu size={18} /></button>
+          <button className="brand-word" onClick={() => chooseCategory("all")}><span>TENANT</span>ACT UI</button>
           <span className="product-pill">Component Library</span>
           <span className="version">v0.1.0</span>
         </div>
@@ -55,13 +79,37 @@ export default function App() {
         </nav>
       </header>
 
-      <aside className="sidebar">
+      {mobileNavOpen && <button className="sidebar-scrim" aria-label="Close navigation" onClick={() => setMobileNavOpen(false)} />}
+
+      <aside className={mobileNavOpen ? "sidebar is-mobile-open" : "sidebar"}>
+        <div className="sidebar-mobile-header">
+          <span className="brand-word"><span>TENANT</span>ACT UI</span>
+          <button aria-label="Close navigation" onClick={() => setMobileNavOpen(false)}><X size={18} /></button>
+        </div>
         <button className={isOverview ? "sidebar-home is-active" : "sidebar-home"} onClick={() => chooseCategory("all")}>
           <Home size={17} />Overview
         </button>
+        {demoCategory && (
+          <div className={category === "demos" ? "sidebar-group sidebar-demo is-open" : "sidebar-group sidebar-demo"}>
+            <button className={category === "demos" ? "is-active" : ""} onClick={() => chooseCategory("demos")}>
+              {DemoIcon && <DemoIcon size={16} />}
+              <span>{demoCategory.name}</span>
+              <span>{demoComponents.length}</span>
+            </button>
+            {category === "demos" && (
+              <div className="sidebar-subnav">
+                {demoComponents.map((component) => (
+                  <a key={component.id} href={`#${component.id}`}>
+                    {component.name}
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
         <h2>Components</h2>
         <nav className="sidebar-nav">
-          {categories.map((item) => {
+          {componentCategories.map((item) => {
             const Icon = item.icon;
             const categoryComponents = components.filter((component) => component.category === item.id);
             const isActive = category === item.id;
@@ -93,17 +141,24 @@ export default function App() {
       </aside>
 
       <main id="top" className="content">
-        {isOverview ? (
+        {isSearching ? (
+          <SearchResultsPage
+            query={query}
+            results={searchResults}
+            onQueryChange={setQuery}
+            onClearSearch={() => setQuery("")}
+          />
+        ) : isOverview ? (
           <OverviewPage
             query={query}
-            filtered={filtered}
+            filtered={components}
             onQueryChange={setQuery}
             onCategoryChange={chooseCategory}
           />
         ) : (
           <CategoryPage
             category={activeCategory}
-            components={filtered}
+            components={categoryComponents}
             query={query}
             onQueryChange={setQuery}
             onClearSearch={() => setQuery("")}
@@ -111,6 +166,44 @@ export default function App() {
         )}
       </main>
     </div>
+  );
+}
+
+function SearchResultsPage({ query, results, onQueryChange, onClearSearch }) {
+  return (
+    <section className="category-page search-results-page">
+      <header className="category-page__header">
+        <span><Search size={22} /></span>
+        <div>
+          <p className="eyebrow">Catalogue search</p>
+          <h1>Search results</h1>
+          <p>{results.length} component{results.length === 1 ? "" : "s"} matching "{query}". Search checks names, categories, tags, descriptions, status, and component type.</p>
+        </div>
+      </header>
+
+      <section className="category-search" aria-label="Catalogue search results">
+        <TenantSearchInput placeholder="Search all components..." value={query} onChange={(event) => onQueryChange(event.target.value)} />
+        <button className="clear-button" onClick={onClearSearch}>Clear search</button>
+      </section>
+
+      {results.length ? (
+        <div className="component-sections">
+          {results.map((component) => (
+            <ComponentSection
+              key={component.id}
+              component={component}
+              category={categories.find((item) => item.id === component.category)}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="search-empty">
+          <Search size={24} />
+          <strong>No matching components</strong>
+          <p>Try a component name, category, tag, or pattern such as buttons, tabs, status, modal, table, or brush.</p>
+        </div>
+      )}
+    </section>
   );
 }
 
@@ -227,9 +320,10 @@ function ComponentSummaryCard({ component, onCategoryChange }) {
 function ComponentSection({ component, category }) {
   const Preview = component.Preview;
   const snippet = createUsageSnippet(component);
+  const isDemo = component.category === "demos";
 
   return (
-    <article className="component-section" id={component.id}>
+    <article className={isDemo ? "component-section component-section--demo" : "component-section"} id={component.id}>
       <div className="component-section__header">
         <div>
           <p className="eyebrow">{category.name}</p>
@@ -243,20 +337,22 @@ function ComponentSection({ component, category }) {
         <Preview />
       </div>
 
-      <div className="component-section__meta">
-        <section>
-          <h3>Example usage</h3>
-          <CodeSnippet code={snippet} />
-        </section>
-        <section>
-          <h3>Tags</h3>
-          <div className="tag-row">{component.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
-        </section>
-        <section>
-          <h3>Guidance</h3>
-          <p>{component.notes || "Keep copy concise, use TenantAct tokens, and prefer wrapped components from src/lib for reusable project UI."}</p>
-        </section>
-      </div>
+      {!isDemo && (
+        <div className="component-section__meta">
+          <section>
+            <h3>Example usage</h3>
+            <CodeSnippet code={snippet} />
+          </section>
+          <section>
+            <h3>Tags</h3>
+            <div className="tag-row">{component.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
+          </section>
+          <section>
+            <h3>Guidance</h3>
+            <p>{component.notes || "Keep copy concise, use TenantAct tokens, and prefer wrapped components from src/lib for reusable project UI."}</p>
+          </section>
+        </div>
+      )}
     </article>
   );
 }

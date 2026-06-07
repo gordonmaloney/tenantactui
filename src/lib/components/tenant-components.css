@@ -5,6 +5,32 @@
   box-shadow: var(--ta-shadow-sm);
 }
 
+.ta-accent-phrase {
+  display: inline;
+}
+
+.ta-accent-phrase__word {
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+}
+
+.ta-accent-phrase__word img {
+  position: absolute;
+  left: -0.08em;
+  right: -0.06em;
+  bottom: -0.14em;
+  z-index: -1;
+  width: calc(100% + 0.14em);
+  height: 0.24em;
+  min-height: 0.16em;
+  max-height: 0.34em;
+  object-fit: fill;
+  opacity: 0.92;
+  transform-origin: left center;
+  pointer-events: none;
+}
+
 .ta-button--primary.MuiButton-root {
   background: linear-gradient(180deg, var(--ta-green), var(--ta-green-dark));
   color: white;

@@ -40,6 +40,7 @@ import {
   Upload,
   X,
 } from "lucide-react";
+import { tenantBrushStrokes } from "../brushes.js";
 import "./tenant-components.css";
 
 export function TenantButton({
@@ -59,6 +60,42 @@ export function TenantButton({
     >
       {children}
     </Button>
+  );
+}
+
+export function TenantAccentPhrase({
+  children,
+  phrase,
+  variant = 0,
+  as: Element = "span",
+  className = "",
+}) {
+  const text = String(children ?? "");
+  const brush = typeof variant === "string"
+    ? tenantBrushStrokes.find((item) => item.id === variant) || tenantBrushStrokes[0]
+    : tenantBrushStrokes[Math.abs(variant) % tenantBrushStrokes.length];
+
+  if (!phrase || !text.includes(phrase)) {
+    return <Element className={className}>{children}</Element>;
+  }
+
+  const [before, ...afterParts] = text.split(phrase);
+  const after = afterParts.join(phrase);
+
+  return (
+    <Element className={`ta-accent-phrase ${className}`.trim()}>
+      {before}
+      <span className="ta-accent-phrase__word">
+        {phrase}
+        <img
+          src={brush.src}
+          alt=""
+          aria-hidden="true"
+          style={{ transform: brush.transform }}
+        />
+      </span>
+      {after}
+    </Element>
   );
 }
 
@@ -410,10 +447,27 @@ export function TenantActivityFeed({ items = [] }) {
   );
 }
 
-export function TenantMobileBottomNav({ items = [] }) {
+export function TenantMobileBottomNav({ items = [], defaultActive = 0, onChange }) {
+  const [activeIndex, setActiveIndex] = useState(defaultActive);
+
+  function chooseItem(index, item) {
+    setActiveIndex(index);
+    onChange?.(item, index);
+  }
+
   return (
     <nav className="ta-mobile-nav" aria-label="Mobile navigation">
-      {items.map((item, index) => <button key={item.label} className={index === 0 ? "is-active" : ""}>{item.icon}<span>{item.label}</span></button>)}
+      {items.map((item, index) => (
+        <button
+          key={item.label}
+          type="button"
+          className={index === activeIndex ? "is-active" : ""}
+          onClick={() => chooseItem(index, item)}
+          aria-current={index === activeIndex ? "page" : undefined}
+        >
+          {item.icon}<span>{item.label}</span>
+        </button>
+      ))}
     </nav>
   );
 }
